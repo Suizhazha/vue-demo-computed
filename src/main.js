@@ -50,7 +50,7 @@ methods:{
         <button @click="showFemale">女</button></div>
       <ul>
         <!--v-for接的属性：元素和索引    note:  :key!!!-->
-        <li v-for="(u,index) in users" :key="index">{{u.name}} - {{u.gender}}</li>
+        <li v-for="(u,index) in displayUsers" :key="index">{{u.name}} - {{u.gender}}</li>
       </ul>
     </div>
   `
