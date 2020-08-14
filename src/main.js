@@ -20,34 +20,35 @@ new Vue({
         createUser("聂文俊",'男'),
         createUser('隋鑫','男')
       ],
-      displayUsers: []
+      //用户默认选择的性别
+      gender: '',
     }
   },
-  created() {
-    this.displayUsers = this.users
-  },
-methods:{
-    showMale(){
-    this.displayUsers = this.users.filter(u => u.gender==='男')
-    },
-  showFemale(){
-    this.displayUsers = this.users.filter(u => u.gender==='女')
-  },
-  showAll(){
-    this.displayUsers = this.users
-  }
-},
+  computed:{
+    displayUsers(){
+      const hash = {
+        male:'男',
+        female: '女'
+      }
+      const {users,gender} = this
+if (gender ===''){
+  return users
+} else if (gender==='male'||gender==='female'){
 
-  // 如何给三个按钮加事件处理函数
-  // 思路一：点击之后改 users
-  // 思路二：使用 computed
+  //或者if (typeof gender==='string')
+  return users.filter( u => u.gender===hash[gender])
+}else {
+  throw new Error('gender 的值为意外的值！')
+}
+    }
+  },
 
   template: `
     <div>
       <div>
-        <button @click="showAll">全部</button>
-        <button @click="showMale">男</button>
-        <button @click="showFemale">女</button></div>
+        <button @click="gender = ''">全部</button>
+        <button @click="gender = 'male'">男</button>
+        <button @click="gender = 'female' ">女</button></div>
       <ul>
         <!--v-for接的属性：元素和索引    note:  :key!!!-->
         <li v-for="(u,index) in displayUsers" :key="index">{{u.name}} - {{u.gender}}</li>
